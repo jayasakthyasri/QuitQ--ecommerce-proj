@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,7 @@ public class CategoryController {
 	
 	
 	@PostMapping 
-	public ResponseEntity<Category> createcategory(Category category)
+	public ResponseEntity<Category> createcategory(@RequestBody Category category)
 	{
 		Category savedcat =  categoryservice.createcategory(category);
 		return new ResponseEntity<>(savedcat,HttpStatus.CREATED);
@@ -42,22 +44,22 @@ public class CategoryController {
 		
 	}
 	
-	@GetMapping
-	public ResponseEntity<Category> getcatbyid(Long id)
+	@GetMapping("/{id}")
+	public ResponseEntity<Category> getcatbyid(@PathVariable("id") Long id)
 	{
 		Category savedcat = categoryservice.getcategorybyid(id);
 		return new ResponseEntity<>(savedcat,HttpStatus.OK);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Category> updatecategory(Long id, Category category)
+	@PutMapping("/{id}")
+	public ResponseEntity<Category> updatecategory(@PathVariable("id") Long id, Category category)
 	{
 		Category updatecat = categoryservice.updatecategory(id, category);
 		return new ResponseEntity<>(updatecat,HttpStatus.OK);
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Category> deletecategory(Long id)
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Category> deletecategory(@PathVariable("id") Long id)
 	{
 		categoryservice.deleteCategory(id);
 		return new ResponseEntity("category deleted successfully",HttpStatus.OK);

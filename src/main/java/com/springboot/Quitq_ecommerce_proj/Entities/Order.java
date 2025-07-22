@@ -36,6 +36,11 @@ public class Order {
 
     @Column(name = "created_at")
     private LocalDateTime created_at;
+    
+    public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	
 
@@ -97,9 +102,6 @@ public class Order {
 		this.created_at = created_at;
 	}
 
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 }
 

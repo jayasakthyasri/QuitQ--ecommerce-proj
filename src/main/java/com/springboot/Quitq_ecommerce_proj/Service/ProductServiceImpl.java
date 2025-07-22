@@ -71,6 +71,14 @@ public class ProductServiceImpl implements ProductService{
 		
 		
 	}
+
+
+
+	@Override
+	public List<Product> getproductsBysellerid(Long sellerid) {
+		// TODO Auto-generated method stub
+		return productrepo.findBySellerId(sellerid);
+	}
 	
 
 }

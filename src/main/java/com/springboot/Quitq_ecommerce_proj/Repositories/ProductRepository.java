@@ -8,6 +8,6 @@ import com.springboot.Quitq_ecommerce_proj.Entities.Product;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
-
+	List<Product> findBySellerId(Long sellerId);
 
 }

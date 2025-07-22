@@ -49,12 +49,23 @@ public class ProductController {
 		return new ResponseEntity<>(savedprod,HttpStatus.OK);
 	}
 
+	
+	@GetMapping("/sellers/{sellerId}")
+	public ResponseEntity<List<Product>> getproductsbysellerid(@PathVariable("sellerId") Long sellerid)
+	{
+		List<Product> savedprods = productservice.getproductsBysellerid(sellerid);
+		return new ResponseEntity<>(savedprods,HttpStatus.OK);
+	}
+	
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<Product> updateProd(@PathVariable("id") Long id,@RequestBody Product prod)
 	{
 		Product updatingprod = productservice.updateProduct(id, prod);
 		return new ResponseEntity<>(updatingprod,HttpStatus.OK);
 	}
+	
+	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Product> deleteprod(@PathVariable("id") Long id)

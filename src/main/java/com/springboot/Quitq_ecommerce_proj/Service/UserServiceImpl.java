@@ -3,9 +3,12 @@ package com.springboot.Quitq_ecommerce_proj.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.springboot.Quitq_ecommerce_proj.Entities.User;
 import com.springboot.Quitq_ecommerce_proj.Repositories.UserRepository;
 
+@Service
 public class UserServiceImpl implements UserService{
 	
 	public UserServiceImpl(UserRepository userrepo) {
