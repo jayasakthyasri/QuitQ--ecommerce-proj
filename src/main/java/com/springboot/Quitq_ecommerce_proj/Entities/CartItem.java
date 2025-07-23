@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="cartItem")
+@Table(name="cart_item")
 public class CartItem {
 
     @Id
@@ -22,23 +22,23 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart_id;
+    private Cart cartid;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product_id;
+    private Product productid;
 
 
 	
 	public CartItem() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	public CartItem(Long id, Cart cart_id, Product product_id, Long quantity) {
 		super();
 		this.id = id;
-		this.cart_id = cart_id;
-		this.product_id = product_id;
+		this.cartid = cart_id;
+		this.productid = product_id;
 		this.quantity = quantity;
 	}
 	public Long getid() {
@@ -47,17 +47,17 @@ public class CartItem {
 	public void setid(Long cart) {
 		this.id = cart;
 	}
-	public Cart getCart_id() {
-		return cart_id;
+	public Cart getCartid() {
+		return cartid;
 	}
-	public void setCart_id(Cart cart_id) {
-		this.cart_id = cart_id;
+	public void setCartid(Cart cart_id) {
+		this.cartid = cart_id;
 	}
-	public Product getProduct_id() {
-		return product_id;
+	public Product getProductid() {
+		return productid;
 	}
-	public void setProduct_id(Product product_id) {
-		this.product_id = product_id;
+	public void setProductid(Product product_id) {
+		this.productid = product_id;
 	}
 	public Long getQuantity() {
 		return quantity;

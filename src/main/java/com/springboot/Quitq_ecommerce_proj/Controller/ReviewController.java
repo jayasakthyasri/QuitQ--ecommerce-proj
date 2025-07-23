@@ -66,7 +66,7 @@ public class ReviewController {
 	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Review> deleteByid(Long id)
+	public ResponseEntity<Review> deleteByid(@PathVariable("id") Long id)
 	{
 		reviewservice.deleteReview(id);
 		return new ResponseEntity("deleted the review successfully",HttpStatus.OK);

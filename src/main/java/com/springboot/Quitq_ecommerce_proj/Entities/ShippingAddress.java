@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name="shippingAddress")
+@Table(name="shipping_address")
 public class ShippingAddress {
 
     @Id
@@ -33,14 +33,14 @@ public class ShippingAddress {
 	
 	public ShippingAddress() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	
-	public ShippingAddress(Long id, User user_id, String address, String city, String pincode) {
+	public ShippingAddress(Long id, User user, String address, String city, String pincode) {
 		super();
 		this.id = id;
-		this.user= user_id;
+		this.user= user;
 		this.address = address;
 		this.city = city;
 		this.pincode = pincode;
@@ -57,13 +57,13 @@ public class ShippingAddress {
 	}
 
 
-	public User getUser_id() {
+	public User getUser() {
 		return user;
 	}
 
 
-	public void setUser_id(User user_id) {
-		this.user = user_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
