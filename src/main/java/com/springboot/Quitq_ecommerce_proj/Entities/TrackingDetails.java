@@ -2,6 +2,8 @@ package com.springboot.Quitq_ecommerce_proj.Entities;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,17 +32,18 @@ public class TrackingDetails {
     private String status;
 
     @Column(name = "estimated_delivery")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime estimated_delivery;
 
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 	
-	public TrackingDetails(Long id, Order order_id, String courier_name, String tracking_number, String status,
+	public TrackingDetails(Long id, Order order, String courier_name, String tracking_number, String status,
 			LocalDateTime estimated_delivery) {
 		super();
 		this.id = id;
-		this.order = order_id;
+		this.order = order;
 		this.courier_name = courier_name;
 		this.tracking_number = tracking_number;
 		this.status = status;
@@ -59,11 +62,11 @@ public class TrackingDetails {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Order getOrder_id() {
+	public Order getOrder() {
 		return order;
 	}
-	public void setOrder_id(Order order_id) {
-		this.order = order_id;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 	public String getCourier_name() {
 		return courier_name;

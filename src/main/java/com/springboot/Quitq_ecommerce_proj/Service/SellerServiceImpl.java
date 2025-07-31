@@ -3,6 +3,8 @@ package com.springboot.Quitq_ecommerce_proj.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.springboot.Quitq_ecommerce_proj.Entities.Seller;
@@ -19,10 +21,17 @@ public class SellerServiceImpl implements SellerService{
 
 	private SellerRepository sellerrepo;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@Override
 	public Seller createSeller(Seller seller) {
-		// TODO Auto-generated method stub
-		return sellerrepo.save(seller);
+	    if (sellerrepo.findByEmail(seller.getEmail()) != null) {
+	        throw new RuntimeException("Seller already exists");
+	    }
+
+	    seller.setPassword(passwordEncoder.encode(seller.getPassword()));
+	    return sellerrepo.save(seller);
 	}
 
 	@Override

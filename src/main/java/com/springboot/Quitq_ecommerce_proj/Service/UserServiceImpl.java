@@ -3,7 +3,11 @@ package com.springboot.Quitq_ecommerce_proj.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot.Quitq_ecommerce_proj.Entities.User;
 import com.springboot.Quitq_ecommerce_proj.Repositories.UserRepository;
@@ -18,10 +22,18 @@ public class UserServiceImpl implements UserService{
 
 	private UserRepository userrepo;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@Override
 	public User createuser(User user) {
-		// TODO Auto-generated method stub
-		return userrepo.save(user);
+	    // Optional: check if user with email already exists
+		if (userrepo.findByEmail(user.getEmail()).isPresent()) {
+	    	throw new RuntimeException("User already exists");
+	    }
+
+	    user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    return userrepo.save(user);
 	}
 
 	@Override

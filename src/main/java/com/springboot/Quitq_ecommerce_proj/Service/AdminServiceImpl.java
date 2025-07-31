@@ -2,6 +2,8 @@ package com.springboot.Quitq_ecommerce_proj.Service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.springboot.Quitq_ecommerce_proj.Entities.Admin;
@@ -17,10 +19,20 @@ public class AdminServiceImpl implements AdminService {
 		this.adminrepo = adminrepo;
 	}
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@Override
 	public Admin registerAdmin(Admin admin) {
-		// TODO Auto-generated method stub
-		return adminrepo.save(admin);
+	    // Check if email already exists (optional)
+	    if (adminrepo.findByEmail(admin.getEmail()) != null) {
+	        throw new RuntimeException("Admin already exists");
+	    }
+
+	    // Hash the password before saving
+	    admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+
+	    return adminrepo.save(admin);
 	}
 
 	@Override

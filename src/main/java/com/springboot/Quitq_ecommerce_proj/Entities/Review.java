@@ -36,11 +36,11 @@ public class Review {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Review(Long id, User user_id, Product product_id, Long rating, String comment) {
+	public Review(Long id, User user, Product product, Long rating, String comment) {
 		super();
 		this.id = id;
-		this.user = user_id;
-		this.product = product_id;
+		this.user = user;
+		this.product = product;
 		this.rating = rating;
 		this.comment = comment;
 	}
@@ -50,16 +50,16 @@ public class Review {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public User getUser_id() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser_id(User user_id) {
+	public void setUser(User user_id) {
 		this.user = user_id;
 	}
-	public Product getProduct_id() {
+	public Product getProduct() {
 		return product;
 	}
-	public void setProduct_id(Product product_id) {
+	public void setProduct(Product product_id) {
 		this.product = product_id;
 	}
 	public Long getRating() {

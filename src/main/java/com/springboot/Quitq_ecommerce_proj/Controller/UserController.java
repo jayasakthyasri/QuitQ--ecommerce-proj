@@ -1,6 +1,7 @@
- package com.springboot.Quitq_ecommerce_proj.Controller;
+package com.springboot.Quitq_ecommerce_proj.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,13 @@ public class UserController  {
 	private UserService userservice;
 	
 	@PostMapping 
-	public ResponseEntity<User> createuser(@RequestBody User user)
-	{
-		User saveduser = userservice.createuser(user);
-		return new ResponseEntity<>(saveduser,HttpStatus.CREATED);
+	public ResponseEntity<?> createuser(@RequestBody User user) {
+	    try {
+	        User saveduser = userservice.createuser(user);
+	        return new ResponseEntity<>(saveduser, HttpStatus.CREATED);
+	    } catch (RuntimeException ex) {
+	        return new ResponseEntity<>(Map.of("error", ex.getMessage()), HttpStatus.CONFLICT);
+	    }
 	}
 	
 	@GetMapping("/{id}")
