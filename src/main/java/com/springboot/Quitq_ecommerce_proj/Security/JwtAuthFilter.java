@@ -1,6 +1,7 @@
 package com.springboot.Quitq_ecommerce_proj.Security;
 
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;
 
@@ -57,7 +58,9 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter{
 			FilterChain chain, Authentication authresult) throws IOException, ServletException
 	{
 		String email = authresult.getName();
-		String token = jwtutil.generateToken(email);
+		UserDetails userDetails = (UserDetails) authresult.getPrincipal();
+
+	String token = jwtutil.generateToken(email, Map.of("role", userDetails.getAuthorities().toString()));
 		
 		response.setContentType("application/json");
 		response.getWriter().write("{\"token\":\"" + token + "\"}");

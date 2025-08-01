@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.*;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -38,24 +39,31 @@ public class SecurityConfig {
     // 🧠 Main Security Filter Chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         JwtAuthFilter jwtAuthFilter = new JwtAuthFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), jwtUtil);
         JwtAuthorizationFilter jwtAuthorizationFilter = new JwtAuthorizationFilter(jwtUtil, userDetailsService);
 
         http
-        .csrf(csrf -> csrf.disable())
-        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/admin/register").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/sellers").permitAll()
-            .requestMatchers("/auth/login").permitAll()
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers("/api/**").authenticated()
-        )
-        .addFilter(jwtAuthFilter)
-        .addFilterAfter(jwtAuthorizationFilter, JwtAuthFilter.class);
-               
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/sellers").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/admin/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/admin/login").permitAll()
+                .requestMatchers("/api/products/seller/**").hasRole("SELLER")
+                .requestMatchers("/api/products").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/sellers/**").hasRole("SELLER")
+                .requestMatchers("/api/users/**").hasRole("USER")
+                
+                .requestMatchers("/api/**").authenticated()
+            )
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(jwtAuthorizationFilter, JwtAuthFilter.class);
+
         return http.build();
     }
 }

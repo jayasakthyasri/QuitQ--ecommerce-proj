@@ -44,16 +44,16 @@ public class Product {
 	}
 
 
-	public Product(Long id, String name, String description, Double price, Long stock, Seller seller_id,
-			Category category_id) {
+	public Product(Long id, String name, String description, Double price, Long stock, Seller seller,
+			Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.stock = stock;
-		this.seller = seller_id;
-		this.category = category_id;
+		this.seller = seller;
+		this.category = category;
 	}
 
 
@@ -107,23 +107,23 @@ public class Product {
 	}
 
 
-	public Seller getSeller_id() {
+	public Seller getSeller() {
 		return seller;
 	}
 
 
-	public void setSeller_id(Seller seller_id) {
-		this.seller = seller_id;
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 
 
-	public Category getCategory_id() {
+	public Category getCategory() {
 		return category;
 	}
 
 
-	public void setCategory_id(Category category_id) {
-		this.category= category_id;
+	public void setCategory(Category category) {
+		this.category= category;
 	}
 	
 	

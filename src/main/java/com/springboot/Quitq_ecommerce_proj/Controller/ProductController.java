@@ -1,5 +1,6 @@
 package com.springboot.Quitq_ecommerce_proj.Controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,28 +15,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.Quitq_ecommerce_proj.Entities.Product;
+import com.springboot.Quitq_ecommerce_proj.Entities.Seller;
+import com.springboot.Quitq_ecommerce_proj.Repositories.SellerRepository;
 import com.springboot.Quitq_ecommerce_proj.Service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 	
-	public ProductController(ProductService productservice) {
+	public ProductController(ProductService productservice, SellerRepository sellerrepo) {
 		super();
 		this.productservice = productservice;
+		this.sellerrepo = sellerrepo;
 	}
 
 	private ProductService productservice;
+	private SellerRepository sellerrepo;
 	
 	@PostMapping
-	public ResponseEntity<Product> createproduct(@RequestBody Product prod)
+	public ResponseEntity<Product> createproduct(@RequestBody Product prod,  Principal principal)
 	{
+		  // Get seller email from token
+	    String sellerEmail = principal.getName(); 
+	    Seller seller = sellerrepo.findByEmail(sellerEmail);
+
+	    prod.setSeller(seller);
+	    
 		Product savedprod = productservice.createProduct(prod);
 		return new ResponseEntity<>(savedprod,HttpStatus.CREATED);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Product>> getallprod(@RequestBody Product prod)
+	public ResponseEntity<List<Product>> getallprod()
 	{
 		List<Product> savedprod = productservice.getallProducts();
 		return new ResponseEntity<>(savedprod,HttpStatus.OK);

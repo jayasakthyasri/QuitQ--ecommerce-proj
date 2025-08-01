@@ -2,6 +2,7 @@ package com.springboot.Quitq_ecommerce_proj.Security;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,9 +23,10 @@ public class JWTutil {
 		return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 	}
 	
-	public String generateToken(String Username)
+	public String generateToken(String Username, Map<String, Object> claims)
 	{
 		return Jwts.builder()
+				.setClaims(claims)
 				.setSubject(Username)
 				.setIssuer("QuitQApp")
 				.setIssuedAt(new Date())

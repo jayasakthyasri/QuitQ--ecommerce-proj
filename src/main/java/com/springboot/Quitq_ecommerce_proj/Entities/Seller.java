@@ -27,6 +27,8 @@ public class Seller {
 
     @Column(nullable = false)
     private String password;
+    
+    private String role = "SELLER";
 
     @Column(name = "company_name")
     private String company_name;
@@ -77,6 +79,12 @@ public class Seller {
 	}
 	public void setCompany_name(String company_name) {
 		this.company_name = company_name;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	

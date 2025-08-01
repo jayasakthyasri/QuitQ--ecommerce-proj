@@ -50,9 +50,9 @@ public class ProductServiceImpl implements ProductService{
 			Product existingprod = optprod.get();
 			existingprod.setName(prod.getName());
 			existingprod.setPrice(prod.getPrice());
-			existingprod.setCategory_id(prod.getCategory_id());
+			existingprod.setCategory(prod.getCategory());
 			existingprod.setDescription(prod.getDescription());
-			existingprod.setSeller_id(prod.getSeller_id());
+			existingprod.setSeller(prod.getSeller());
 			existingprod.setStock(prod.getStock());
 			
 			return productrepo.save(existingprod);

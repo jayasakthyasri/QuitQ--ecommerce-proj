@@ -28,6 +28,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+    
+    private String role = "USER";
 
     @Column(name = "contact_number")
     private String contact_number;
@@ -90,6 +92,12 @@ public class User {
 	}
 	public void setContact_number(String contact_number) {
 		this.contact_number = contact_number;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

@@ -3,8 +3,10 @@ package com.springboot.Quitq_ecommerce_proj.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot.Quitq_ecommerce_proj.Entities.Admin;
 import com.springboot.Quitq_ecommerce_proj.Repositories.AdminRepository;
@@ -25,10 +27,9 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin registerAdmin(Admin admin) {
 	    // Check if email already exists (optional)
-	    if (adminrepo.findByEmail(admin.getEmail()) != null) {
-	        throw new RuntimeException("Admin already exists");
-	    }
-
+		if (adminrepo.findByEmail(admin.getEmail()).isPresent()) {
+		    throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
+		}
 	    // Hash the password before saving
 	    admin.setPassword(passwordEncoder.encode(admin.getPassword()));
 
@@ -40,10 +41,11 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		Optional<Admin> existingadmin = adminrepo.findByEmail(email);
 		
-		if(existingadmin.isPresent() && existingadmin.get().getPassword().equals(password))
-		{
-			return existingadmin.get();
-		}
+		 if (existingadmin.isPresent() && passwordEncoder.matches(password, existingadmin.get().getPassword()))
+		 {
+		        return existingadmin.get();
+		 }
+		 
 		else {
 			
 			return null;
